@@ -12,31 +12,27 @@ import javax.jws.soap.SOAPBinding;
  * Hello world!
  *
  */
-public class App
-{
-    public static void main( String[] args ) {
-        System.out.println( "Selamat datang di Toko Gerry" );
-        System.out.println( "Silakan daftarkan diri kamu untuk dapat mengakses menu di Toko Gerry" );
+public class App {
+    public static void main(String[] args) {
+        System.out.println("Selamat datang di Toko Gerry");
+        System.out.println("Silakan daftarkan diri kamu untuk dapat mengakses menu di Toko Gerry");
 
-        User user = new User("","","");
+        User user = new User("", "", "");
 
         Scanner scan = new Scanner(System.in);
         while (true) {
             try {
-                System.out.println( "Username: " );
+                System.out.println("Username: ");
                 String username = scan.nextLine();
-                if(username.isEmpty()){
+                if (username.isEmpty()) {
                     throw new UsernameException(1);
-                }
-                else if (username.length() < 6) {
+                } else if (username.length() < 6) {
                     throw new UsernameException(2);
-                }
-                else {
+                } else {
                     user.setUsername(username);
                     break;
                 }
-            }
-            catch (UsernameException e) {
+            } catch (UsernameException e) {
                 System.out.println(e.getErrMessage());
             }
         }
@@ -53,8 +49,7 @@ public class App
                     user.setEmail(email);
                     break;
                 }
-            }
-            catch (EmailException e) {
+            } catch (EmailException e) {
                 System.out.println(e.getErrMessage());
             }
         }
@@ -69,20 +64,20 @@ public class App
                 System.out.println("Password: ");
                 String password = scan.nextLine();
 
-                for (int i = 0; i<password.length();i++){
+                for (int i = 0; i < password.length(); i++) {
                     char c = password.charAt(i);
-                    if(Character.isLetter(c) && Character.isLowerCase(c)){
+                    if (Character.isLetter(c) && Character.isLowerCase(c)) {
                         flagKecil = true;
                     }
-                    if(Character.isDigit(c)){
+                    if (Character.isDigit(c)) {
                         flagAngka = true;
                     }
-                    if(Character.isLetter(c) && Character.isUpperCase(c)){
-                    flagBesar = true;
+                    if (Character.isLetter(c) && Character.isUpperCase(c)) {
+                        flagBesar = true;
                     }
                 }
 
-                Pattern pattern = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+                Pattern pattern = Pattern.compile("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
                 Matcher match = pattern.matcher(password);
                 boolean check = match.find();
 
@@ -91,7 +86,7 @@ public class App
 
                 if (password.isEmpty()) {
                     throw new PasswordException(1);
-                }else if (!(flagKecil && flagBesar && flagSimbol && flagAngka)) {
+                } else if (!(flagKecil && flagBesar && flagSimbol && flagAngka)) {
                     throw new PasswordException(4);
                 } else if (password.equals(user.getUsername())) {
                     throw new PasswordException(3);
@@ -99,25 +94,23 @@ public class App
                     throw new PasswordException(2);
                 } else {
                     user.setPassword(password);
-                    while(true){
+                    while (true) {
                         System.out.println("Password Confirmed: ");
                         String password2 = scan.nextLine();
-                        if (!(password2.equals(user.getPassword()))){
+                        if (!(password2.equals(user.getPassword()))) {
                             throw new PasswordException(5);
-                        }
-                        else {
+                        } else {
                             break;
                         }
                     }
                     break;
                 }
-            }
-            catch (PasswordException e) {
+            } catch (PasswordException e) {
                 System.out.println(e.getErrMessage());
             }
         }
-        System.out.println( "Akun anda berhasil didaftarkan!" );
-        System.out.println( "Silahkan login untuk melanjutkan." );
+        System.out.println("Akun anda berhasil didaftarkan!");
+        System.out.println("Silahkan login untuk melanjutkan.");
 
         while (true) {
             try {
@@ -125,19 +118,15 @@ public class App
                 String username = scan.nextLine();
                 System.out.println("Password: ");
                 String password = scan.nextLine();
-                if (username.isEmpty() || password.isEmpty()){
+                if (username.isEmpty() || password.isEmpty()) {
                     throw new LoginException(1);
-                }
-                else if(!(username.equals(user.getUsername()) && password.equals(user.getPassword()))){
+                } else if (!(username.equals(user.getUsername()) && password.equals(user.getPassword()))) {
                     throw new LoginException(2);
-                }
-
-                else {
-                    System.out.println( "Selamat datang, " + user.getUsername());
+                } else {
+                    System.out.println("Selamat datang, " + user.getUsername());
                     break;
                 }
-            }
-            catch (LoginException e) {
+            } catch (LoginException e) {
                 System.out.println(e.getErrMessage());
             }
 
@@ -145,3 +134,4 @@ public class App
 
 
     }
+}
